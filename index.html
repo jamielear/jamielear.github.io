@@ -41,52 +41,54 @@
 			<div class="grid-item" id="10"></div>
 			<div class="grid-item" id="11"></div>
 			<div class="grid-item" id="12"></div>
-			<div class="grid-item" id="12"></div>
 			<div class="grid-item" id="13"></div>
 			<div class="grid-item" id="14"></div>
 			<div class="grid-item" id="15"></div>
 			<div class="grid-item" id="16"></div>
 		</div>
 
-	<!--
-		<img src="forwardCard.jpg" alt="forward" width="72" height="100">
-		<img src="turnCard.jpg" alt="turn" width="72" height="100">
-		<img id="Robot" src="robotimage_final.png" alt="Robot" width="125" height="125">
-	-->
-
-		<button onclick="RobotPlace()">Place</button>
 		<button onclick="RobotClear()">Clear</button>
 		<button onclick="RobotForward()">Forward</button>
+		<button onclick="Rotate()">Rotate</button>
 
 	</body>
 
 	<script>
-
+"use strict"
 	var x = document.createElement("img");
 	x.setAttribute("src", "robotimage_final.png");
 	x.setAttribute("width", "125");
 	x.setAttribute("height", "125");
 	x.setAttribute("alt", "Robot");
-	var Place;
-	var y;
-	var y = 1;
-
-
+	var Place = 1;
+	var rotation = 0;
+	document.getElementById(1).appendChild(x);
 
 		function RobotForward() {
-			if (Place == null) {
-				Place = Number(y)
+			if (rotation == 0) {
+				if (Place > 4) {
+					Place = Place - 4;
+					document.getElementById(Place).appendChild(x);
+				}
 			}
-			Place = Place + 1;
-			document.getElementById("6").innerHTML = Place;
-			document.getElementById(Place).appendChild(x);
-		}
-
-		function RobotPlace() {
-			document.getElementById(1).appendChild(x);
-			document.getElementById("6").innerHTML = Place;
-			var y = 1;
-			document.getElementById("7").innerHTML = y;
+			if (rotation == 90) {
+				if (Place % 4 !== 0) {
+					Place = Place + 1;
+					document.getElementById(Place).appendChild(x);
+				}
+			}
+			if (rotation == 180) {
+				if (Place < 13) {
+					Place = Place + 4;
+					document.getElementById(Place).appendChild(x);
+				}
+			}
+			if (rotation == 270) {
+				if (Place % 4 !== 1) {
+					Place = Place - 1;
+					document.getElementById(Place).appendChild(x);
+				}
+			}
 		}
 
 		function RobotClear() {
@@ -106,9 +108,15 @@
 			document.getElementById("14").innerHTML = "";
 			document.getElementById("15").innerHTML = "";
 			document.getElementById("16").innerHTML = "";
-			y = 1
-			Place = 1
+			Place = 1;
+			rotation = 0;
 		}
+
+		function Rotate() {
+			rotation = (rotation + 90) % 360;
+      x.style.transform = "rotate(" + rotation + "deg)";
+    }
+
 	</script>
 
 </html>
