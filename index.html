@@ -8,11 +8,18 @@
 			</title>
 
 			<style>
-				.grid-container {
+				.grid-container1 {
 				  display: grid;
 				  grid-template-columns: 150px 150px 150px 150px;
 					grid-template-rows: 150px 150px 150px 150px;
 				}
+
+				.grid-container2 {
+				  display: grid;
+				  grid-template-columns: 75px 75px 75px 75px 75px 75px 75px;
+					grid-template-rows: 100px;
+				}
+
 				.grid-item {
 				  background-color: rgba(255, 255, 255, 0.8);
 				  border: 1px solid rgba(0, 0, 0, 0.8);
@@ -28,7 +35,7 @@
 		</head>
 
 	<body>
-		<div class="grid-container">
+		<div class="grid-container1">
 			<div class="grid-item" id="1"></div>
 			<div class="grid-item" id="2"></div>
 			<div class="grid-item" id="3"></div>
@@ -47,9 +54,40 @@
 			<div class="grid-item" id="16"></div>
 		</div>
 
-		<button onclick="RobotClear()">Clear</button>
+		<br>
+
+		<div class="grid-container2">
+			<div class="grid-item" id="Robot11"></div>
+			<div class="grid-item" id="Robot12"></div>
+			<div class="grid-item" id="Robot13"></div>
+			<div class="grid-item" id="Robot14"></div>
+			<div class="grid-item" id="Robot15"></div>
+			<div class="grid-item" id="Robot16"></div>
+			<div class="grid-item" id="Robot17"></div>
+		</div>
+
 		<button onclick="RobotForward()">Forward</button>
 		<button onclick="Rotate()">Rotate</button>
+		<button onclick="Forward()">Forward</button>
+		<button onclick="Turn()">Turn</button>
+		<button onclick="Run()">Run</button>
+
+		<br>
+
+		<input type="radio" id="111" name="radio1" value="R11">
+		<label for="R1.1">1</label>
+		<input type="radio" id="112" name="radio1" value="R12">
+		<label for="R1.2">2</label>
+		<input type="radio" id="113" name="radio1" value="R13">
+		<label for="R1.3">3</label>
+		<input type="radio" id="114" name="radio1" value="R14">
+		<label for="R1.4">4</label>
+		<input type="radio" id="115" name="radio1" value="R15">
+		<label for="R1.5">5</label>
+		<input type="radio" id="116" name="radio1" value="R16">
+		<label for="R1.6">6</label>
+		<input type="radio" id="117" name="radio1" value="R17">
+		<label for="R1.7">7</label>
 
 	</body>
 
@@ -60,30 +98,49 @@
 	x.setAttribute("width", "125");
 	x.setAttribute("height", "125");
 	x.setAttribute("alt", "Robot");
+
+	var y = document.createElement("img");
+	y.setAttribute("src", "forwardCard.jpg");
+	y.setAttribute("width", "72");
+	y.setAttribute("height", "90");
+	y.setAttribute("alt", "Robot");
+
+	var z = document.createElement("img");
+	z.setAttribute("src", "turnCard.jpg");
+	z.setAttribute("width", "72");
+	z.setAttribute("height", "90");
+	z.setAttribute("alt", "Robot");
+
+	var Program1 = [null,"0","0","0","0","0","0","0"]
+
 	var Place = 1;
 	var rotation = 0;
 	document.getElementById(1).appendChild(x);
+	//document.getElementById("Robot16").appendChild(y);
+	//document.getElementById("Robot17").appendChild(z);
+
+	document.getElementById(111).checked = true;
 
 		function RobotForward() {
-			if (rotation == 0) {
+			if (rotation == 180) {
 				if (Place > 4) {
 					Place = Place - 4;
 					document.getElementById(Place).appendChild(x);
 				}
 			}
-			if (rotation == 90) {
+			if (rotation == 270) {
 				if (Place % 4 !== 0) {
 					Place = Place + 1;
 					document.getElementById(Place).appendChild(x);
 				}
 			}
-			if (rotation == 180) {
+			if (rotation == 0) {
 				if (Place < 13) {
 					Place = Place + 4;
 					document.getElementById(Place).appendChild(x);
 				}
 			}
-			if (rotation == 270) {
+			if (rotation == 90) {
 				if (Place % 4 !== 1) {
 					Place = Place - 1;
 					document.getElementById(Place).appendChild(x);
@@ -91,31 +148,74 @@
 			}
 		}
 
-		function RobotClear() {
-			document.getElementById("1").innerHTML = "";
-			document.getElementById("2").innerHTML = "";
-			document.getElementById("3").innerHTML = "";
-			document.getElementById("4").innerHTML = "";
-			document.getElementById("5").innerHTML = "";
-			document.getElementById("6").innerHTML = "";
-			document.getElementById("7").innerHTML = "";
-			document.getElementById("8").innerHTML = "";
-			document.getElementById("9").innerHTML = "";
-			document.getElementById("10").innerHTML = "";
-			document.getElementById("11").innerHTML = "";
-			document.getElementById("12").innerHTML = "";
-			document.getElementById("13").innerHTML = "";
-			document.getElementById("14").innerHTML = "";
-			document.getElementById("15").innerHTML = "";
-			document.getElementById("16").innerHTML = "";
-			Place = 1;
-			rotation = 0;
-		}
-
 		function Rotate() {
 			rotation = (rotation + 90) % 360;
       x.style.transform = "rotate(" + rotation + "deg)";
     }
+
+
+		function Forward() {
+			for (var i = 1; i < 8; i++) {
+    		if (document.getElementById(110 + i).checked) {
+        	//document.getElementById("Robot" + (10 + i)).appendChild(y);
+					if (Program1[i] == "F") {
+						Program1[i] = "F";
+						document.getElementById("Robot11").innerHTML = Program1;
+					}
+					if (Program1[i] == "T") {
+						Program1[i] = "F";
+						document.getElementById("Robot11").innerHTML = Program1;
+					} else {
+						for (var j = 1; j < i+1; j++) {
+							if (Program1[(i-j)] != "0") {
+								Program1[((i-j)+1)] = "F";
+								document.getElementById("Robot11").innerHTML = Program1;
+								break;
+							}
+						}
+					}
+      	break;
+	   		}
+  		}
+		}
+
+
+		function Turn() {
+			for (var i = 1; i < 8; i++) {
+    		if (document.getElementById(110 + i).checked) {
+        	//document.getElementById("Robot" + (10 + i)).appendChild(y);
+					if (Program1[i] == "T") {
+						Program1[i] = "T";
+						document.getElementById("Robot11").innerHTML = Program1;
+					}
+					if (Program1[i] == "F") {
+						Program1[i] = "T";
+						document.getElementById("Robot11").innerHTML = Program1;
+					}	else {
+						for (var j = 1; j < i + 1; j++) {
+							if (Program1[(i-j)] != "0") {
+								Program1[((i-j)+1)] = "T";
+								document.getElementById("Robot11").innerHTML = Program1;
+								break;
+							}
+						}
+					}
+      	break;
+	   		}
+  		}
+		}
+
+		function Run() {
+			for (var i = 1; i < 8; i++) {
+				if (Program1[i] == "T") {
+					Rotate();
+				}
+				if (Program1[i] == "F") {
+					RobotForward();
+				}
+			}
+		}
+
 
 	</script>
 
