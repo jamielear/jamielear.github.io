@@ -66,11 +66,8 @@
 			<div class="grid-item" id="Robot17"></div>
 		</div>
 
-		<button onclick="RobotForward()">Forward</button>
-		<button onclick="Rotate()">Rotate</button>
 		<button onclick="Forward()">Forward</button>
 		<button onclick="Turn()">Turn</button>
-		<button onclick="Run()">Run</button>
 
 		<br>
 
@@ -99,25 +96,12 @@
 	x.setAttribute("height", "125");
 	x.setAttribute("alt", "Robot");
 
-	var y = document.createElement("img");
-	y.setAttribute("src", "forwardCard.jpg");
-	y.setAttribute("width", "72");
-	y.setAttribute("height", "90");
-	y.setAttribute("alt", "Robot");
-
-	var z = document.createElement("img");
-	z.setAttribute("src", "turnCard.jpg");
-	z.setAttribute("width", "72");
-	z.setAttribute("height", "90");
-	z.setAttribute("alt", "Robot");
-
 	var Program1 = [null,"0","0","0","0","0","0","0"]
 
 	var Place = 1;
 	var rotation = 0;
+	var k;
 	document.getElementById(1).appendChild(x);
-	//document.getElementById("Robot16").appendChild(y);
-	//document.getElementById("Robot17").appendChild(z);
 
 	document.getElementById(111).checked = true;
 
@@ -157,25 +141,22 @@
 		function Forward() {
 			for (var i = 1; i < 8; i++) {
     		if (document.getElementById(110 + i).checked) {
-        	//document.getElementById("Robot" + (10 + i)).appendChild(y);
 					if (Program1[i] == "F") {
 						Program1[i] = "F";
-						document.getElementById("Robot11").innerHTML = Program1;
 					}
 					if (Program1[i] == "T") {
 						Program1[i] = "F";
-						document.getElementById("Robot11").innerHTML = Program1;
 					} else {
 						for (var j = 1; j < i+1; j++) {
 							if (Program1[(i-j)] != "0") {
 								Program1[((i-j)+1)] = "F";
-								document.getElementById("Robot11").innerHTML = Program1;
 								break;
 							}
 						}
 					}
-      	break;
 	   		}
+				Array1();
+				Run();
   		}
 		}
 
@@ -183,25 +164,22 @@
 		function Turn() {
 			for (var i = 1; i < 8; i++) {
     		if (document.getElementById(110 + i).checked) {
-        	//document.getElementById("Robot" + (10 + i)).appendChild(y);
 					if (Program1[i] == "T") {
 						Program1[i] = "T";
-						document.getElementById("Robot11").innerHTML = Program1;
 					}
 					if (Program1[i] == "F") {
 						Program1[i] = "T";
-						document.getElementById("Robot11").innerHTML = Program1;
 					}	else {
 						for (var j = 1; j < i + 1; j++) {
 							if (Program1[(i-j)] != "0") {
 								Program1[((i-j)+1)] = "T";
-								document.getElementById("Robot11").innerHTML = Program1;
 								break;
 							}
 						}
 					}
-      	break;
 	   		}
+				Array1();
+				Run();
   		}
 		}
 
@@ -216,6 +194,36 @@
 			}
 		}
 
+		function Array1() {
+			for (k = 1; k < 8; k++) {
+				if (Program1[k] == "F") {
+					ForwardCard();
+				}
+				if (Program1[k] == "T") {
+					TurnCard();
+				}
+			}
+		}
+
+		function ForwardCard() {
+			var y = document.createElement("img");
+			y.setAttribute("src", "forwardCard.jpg");
+			y.setAttribute("width", "72");
+			y.setAttribute("height", "90");
+			y.setAttribute("alt", "Robot");
+			document.getElementById("Robot1" + k).innerHTML = "";
+			document.getElementById("Robot1" + k).appendChild(y);
+		}
+
+		function TurnCard() {
+			var z = document.createElement("img");
+			z.setAttribute("src", "turnCard.jpg");
+			z.setAttribute("width", "72");
+			z.setAttribute("height", "90");
+			z.setAttribute("alt", "Robot");
+			document.getElementById("Robot1" + k).innerHTML = "";
+			document.getElementById("Robot1" + k).appendChild(z);
+		}
 
 	</script>
 
