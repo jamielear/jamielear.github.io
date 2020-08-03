@@ -66,140 +66,199 @@
 			<div class="grid-item" id="Robot17"></div>
 		</div>
 
-		<button onclick="Forward()">Forward</button>
-		<button onclick="Turn()">Turn</button>
+		<br>
+
+		<div class="grid-container2">
+			<div class="grid-item" id="Robot21"></div>
+			<div class="grid-item" id="Robot22"></div>
+			<div class="grid-item" id="Robot23"></div>
+			<div class="grid-item" id="Robot24"></div>
+			<div class="grid-item" id="Robot25"></div>
+			<div class="grid-item" id="Robot26"></div>
+			<div class="grid-item" id="Robot27"></div>
+		</div>
+
+		</br>
+
+
+
+		Player
+
+		<br>
+
+		<input type="radio" id="#1" name="Player" value="">
+		<label>1</label>
+		<input type="radio" id="#2" name="Player" value="">
+		<label>2</label>
+
+		<br>
+
+		Position
 
 		<br>
 
 		<input type="radio" id="111" name="radio1" value="R11">
-		<label for="R1.1">1</label>
+		<label>1</label>
 		<input type="radio" id="112" name="radio1" value="R12">
-		<label for="R1.2">2</label>
+		<label>2</label>
 		<input type="radio" id="113" name="radio1" value="R13">
-		<label for="R1.3">3</label>
+		<label>3</label>
 		<input type="radio" id="114" name="radio1" value="R14">
-		<label for="R1.4">4</label>
+		<label>4</label>
 		<input type="radio" id="115" name="radio1" value="R15">
-		<label for="R1.5">5</label>
+		<label>5</label>
 		<input type="radio" id="116" name="radio1" value="R16">
-		<label for="R1.6">6</label>
+		<label>6</label>
 		<input type="radio" id="117" name="radio1" value="R17">
-		<label for="R1.7">7</label>
+		<label>7</label>
+
+		<br>
+
+		<button onclick="Forward()">Forward</button>
+		<button onclick="Turn()">Turn</button>
+		<button onclick="Run()">Run</button>
+		<button onclick="Array1()">Array</button>
 
 	</body>
 
 	<script>
 "use strict"
-	var x = document.createElement("img");
-	x.setAttribute("src", "robotimage_final.png");
-	x.setAttribute("width", "125");
-	x.setAttribute("height", "125");
-	x.setAttribute("alt", "Robot");
+	var x1 = document.createElement("img");
+	x1.setAttribute("src", "robotimage_final.png");
+	x1.setAttribute("width", "125");
+	x1.setAttribute("height", "125");
+	x1.setAttribute("alt", "Robot");
+	x1.style.transform = "rotate(270deg)"
 
-	var Program1 = [null,"0","0","0","0","0","0","0"]
+	var x2 = document.createElement("img");
+	x2.setAttribute("src", "robotimage_final.png");
+	x2.setAttribute("width", "125");
+	x2.setAttribute("height", "125");
+	x2.setAttribute("alt", "Robot");
+	x2.style.transform = "rotate(90deg)"
 
-	var Place = 1;
-	var rotation = 0;
+	var x = ["",x1,x2];
+
+	var go = [null,0,0];
+
+	var Program = [
+		[null,"0","0","0","0","0","0","0"]
+		[null,"0","0","0","0","0","0","0"]
+	];
+
+	var Place = ["",1,16];
+	var rotation = ["",270,90];
 	var k;
-	document.getElementById(1).appendChild(x);
+	var l;
+	document.getElementById(1).appendChild(x[1]);
+	document.getElementById(16).appendChild(x[2]);
 
 	document.getElementById(111).checked = true;
+	document.getElementById("#1").checked = true;
 
 		function RobotForward() {
-			if (rotation == 180) {
-				if (Place > 4) {
-					Place = Place - 4;
-					document.getElementById(Place).appendChild(x);
+			if (rotation[l] == 180) {
+				if (Place[l] > 4) {
+					Place[l] = Place[l] - 4;
+					document.getElementById(Place[l]).appendChild(x[l]);
 				}
 			}
-			if (rotation == 270) {
-				if (Place % 4 !== 0) {
-					Place = Place + 1;
-					document.getElementById(Place).appendChild(x);
+			if (rotation[l] == 270) {
+				if (Place[l] % 4 !== 0) {
+					Place[l] = Place[Player()] + 1;
+					document.getElementById(Place[l]).appendChild(x[l]);
 				}
 			}
-			if (rotation == 0) {
-				if (Place < 13) {
-					Place = Place + 4;
-					document.getElementById(Place).appendChild(x);
+			if (rotation[l] == 0) {
+				if (Place[l] < 13) {
+					Place[l] = Place[l] + 4;
+					document.getElementById(Place[l]).appendChild(x[l]);
 				}
 			}
-			if (rotation == 90) {
-				if (Place % 4 !== 1) {
-					Place = Place - 1;
-					document.getElementById(Place).appendChild(x);
+			if (rotation[l] == 90) {
+				if (Place[l] % 4 !== 1) {
+					Place[l] = Place[l] - 1;
+					document.getElementById(Place[l]).appendChild(x[l]);
 				}
 			}
 		}
 
 		function Rotate() {
-			rotation = (rotation + 90) % 360;
-      x.style.transform = "rotate(" + rotation + "deg)";
+			rotation[l] = (rotation[l] + 90) % 360;
+			// ?
     }
 
 
 		function Forward() {
-			for (var i = 1; i < 8; i++) {
-    		if (document.getElementById(110 + i).checked) {
-					if (Program1[i] == "F") {
-						Program1[i] = "F";
-					}
-					if (Program1[i] == "T") {
-						Program1[i] = "F";
-					} else {
-						for (var j = 1; j < i+1; j++) {
-							if (Program1[(i-j)] != "0") {
-								Program1[((i-j)+1)] = "F";
-								break;
+			if (go[Player()] == 0) {
+				for (var i = 1; i < 8; i++) {
+    			if (document.getElementById(110 + i).checked) {
+						if (Program[Player()[i]] == "T") {
+							Program[Player()[i]] = "F";
+							go[Player()] = 1;
+						} else {
+							for (var j = 1; j < i+1; j++) {
+								if (Program[Player()[i-j]] != "0") {
+									Program[Player()[i-j+1]] = "F";
+									go[Player()] = 1;
+									break;
+								}
 							}
 						}
-					}
-	   		}
+	   			}
+  			}
 				Array1();
 				Run();
-  		}
+			}
 		}
 
 
 		function Turn() {
-			for (var i = 1; i < 8; i++) {
-    		if (document.getElementById(110 + i).checked) {
-					if (Program1[i] == "T") {
-						Program1[i] = "T";
-					}
-					if (Program1[i] == "F") {
-						Program1[i] = "T";
-					}	else {
-						for (var j = 1; j < i + 1; j++) {
-							if (Program1[(i-j)] != "0") {
-								Program1[((i-j)+1)] = "T";
-								break;
+			if (go[Player()] == 0) {
+				for (var i = 1; i < 8; i++) {
+    			if (document.getElementById(110 + i).checked) {
+						if (Program[Player()[i]] == "F") {
+							Program[Player()[i]] = "T";
+							go[Player()] = 1;
+						}	else {
+							for (var j = 1; j < i + 1; j++) {
+								if (Program[Player()[i-j]] != "0") {
+									Program[Player()[i-j+1]] = "T";
+									go[Player()] = 1;
+									break;
+								}
 							}
 						}
-					}
-	   		}
+	   			}
+  			}
 				Array1();
 				Run();
-  		}
+			}
 		}
 
 		function Run() {
-			for (var i = 1; i < 8; i++) {
-				if (Program1[i] == "T") {
-					Rotate();
+			console.log(go)
+			if (go[1]==1 && go[2]==1) {
+				for (var i = 1; i < 8; i++) {
+					for (var l = 1; l < 3; l++) {
+						if (Program[l[i]] == "T") {
+							Rotate();
+						}
+						if (Program[l[i]] == "F") {
+							RobotForward();
+						}
+					}
 				}
-				if (Program1[i] == "F") {
-					RobotForward();
-				}
+				go = ["",0,0];
 			}
 		}
 
 		function Array1() {
 			for (k = 1; k < 8; k++) {
-				if (Program1[k] == "F") {
+				if (Program[Player()[k]] == "F") {
 					ForwardCard();
 				}
-				if (Program1[k] == "T") {
+				if (Program[Player()[k]] == "T") {
 					TurnCard();
 				}
 			}
@@ -223,6 +282,14 @@
 			z.setAttribute("alt", "Robot");
 			document.getElementById("Robot1" + k).innerHTML = "";
 			document.getElementById("Robot1" + k).appendChild(z);
+		}
+
+		function Player() {
+			for (var i = 1; i < 3; i++) {
+				if (document.getElementById("#" + i).checked){
+					return i;
+				}
+			}
 		}
 
 	</script>
