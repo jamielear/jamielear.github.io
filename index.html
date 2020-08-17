@@ -142,9 +142,11 @@
 	var go = [null,0,0];
 
 	var Program = [
-		[null,"0","0","0","0","0","0","0"]
+		null,
+		[null,"0","0","0","0","0","0","0"],
 		[null,"0","0","0","0","0","0","0"]
 	];
+	console.log(Program);
 
 	var Place = ["",1,16];
 	var rotation = ["",270,90];
@@ -156,7 +158,8 @@
 	document.getElementById(111).checked = true;
 	document.getElementById("#1").checked = true;
 
-		function RobotForward() {
+		function RobotForward(l) {
+			console.log(l);
 			if (rotation[l] == 180) {
 				if (Place[l] > 4) {
 					Place[l] = Place[l] - 4;
@@ -165,7 +168,7 @@
 			}
 			if (rotation[l] == 270) {
 				if (Place[l] % 4 !== 0) {
-					Place[l] = Place[Player()] + 1;
+					Place[l] = Place[l] + 1;
 					document.getElementById(Place[l]).appendChild(x[l]);
 				}
 			}
@@ -183,9 +186,10 @@
 			}
 		}
 
-		function Rotate() {
+		function Rotate(l) {
 			rotation[l] = (rotation[l] + 90) % 360;
-			// ?
+			x1.style.transform = "rotate(" + rotation[1] + "deg)"
+			x2.style.transform = "rotate(" + rotation[2] + "deg)"
     }
 
 
@@ -193,19 +197,20 @@
 			if (go[Player()] == 0) {
 				for (var i = 1; i < 8; i++) {
     			if (document.getElementById(110 + i).checked) {
-						if (Program[Player()[i]] == "T") {
-							Program[Player()[i]] = "F";
+						if (Program[Player()][i] == "T") {
+							Program[Player()][i] = "F";
 							go[Player()] = 1;
 						} else {
 							for (var j = 1; j < i+1; j++) {
-								if (Program[Player()[i-j]] != "0") {
-									Program[Player()[i-j+1]] = "F";
+								if (Program[Player()][i-j] != "0") {
+									Program[Player()][i-j+1] = "F";
 									go[Player()] = 1;
 									break;
 								}
 							}
 						}
 	   			}
+					break;
   			}
 				Array1();
 				Run();
@@ -217,13 +222,13 @@
 			if (go[Player()] == 0) {
 				for (var i = 1; i < 8; i++) {
     			if (document.getElementById(110 + i).checked) {
-						if (Program[Player()[i]] == "F") {
-							Program[Player()[i]] = "T";
+						if (Program[Player()][i] == "F") {
+							Program[Player()][i] = "T";
 							go[Player()] = 1;
 						}	else {
 							for (var j = 1; j < i + 1; j++) {
-								if (Program[Player()[i-j]] != "0") {
-									Program[Player()[i-j+1]] = "T";
+								if (Program[Player()][i-j] != "0") {
+									Program[Player()][i-j+1] = "T";
 									go[Player()] = 1;
 									break;
 								}
@@ -237,15 +242,14 @@
 		}
 
 		function Run() {
-			console.log(go)
 			if (go[1]==1 && go[2]==1) {
 				for (var i = 1; i < 8; i++) {
 					for (var l = 1; l < 3; l++) {
-						if (Program[l[i]] == "T") {
-							Rotate();
+						if (Program[l][i] == "T") {
+							Rotate(l);
 						}
-						if (Program[l[i]] == "F") {
-							RobotForward();
+						if (Program[l][i] == "F") {
+							RobotForward(l);
 						}
 					}
 				}
@@ -254,11 +258,12 @@
 		}
 
 		function Array1() {
+			console.log("Player" + Player());
 			for (k = 1; k < 8; k++) {
-				if (Program[Player()[k]] == "F") {
+				if (Program[Player()][k] == "F") {
 					ForwardCard();
 				}
-				if (Program[Player()[k]] == "T") {
+				if (Program[Player()][k] == "T") {
 					TurnCard();
 				}
 			}
@@ -270,8 +275,8 @@
 			y.setAttribute("width", "72");
 			y.setAttribute("height", "90");
 			y.setAttribute("alt", "Robot");
-			document.getElementById("Robot1" + k).innerHTML = "";
-			document.getElementById("Robot1" + k).appendChild(y);
+			document.getElementById("Robot" + Player() + k).innerHTML = "";
+			document.getElementById("Robot" + Player() + k).appendChild(y);
 		}
 
 		function TurnCard() {
@@ -280,8 +285,8 @@
 			z.setAttribute("width", "72");
 			z.setAttribute("height", "90");
 			z.setAttribute("alt", "Robot");
-			document.getElementById("Robot1" + k).innerHTML = "";
-			document.getElementById("Robot1" + k).appendChild(z);
+			document.getElementById("Robot" + Player() + k).innerHTML = "";
+			document.getElementById("Robot" + Player() + k).appendChild(z);
 		}
 
 		function Player() {
