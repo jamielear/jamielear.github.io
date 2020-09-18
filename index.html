@@ -146,6 +146,7 @@
 	];
 
 	var Place = ["",1,16];
+	var newPlace = ["",1,16];
 	var rotation = ["",270,90];
 	var k;
 	var l;
@@ -158,28 +159,45 @@
 		function RobotForward(l) {
 			if (rotation[l] == 180) {
 				if (Place[l] > 4) {
-					Place[l] = Place[l] - 4;
-					document.getElementById(Place[l]).appendChild(x[l]);
+					newPlace[l] = Place[l] - 4;
 				}
 			}
 			if (rotation[l] == 270) {
 				if (Place[l] % 4 !== 0) {
-					Place[l] = Place[l] + 1;
-					document.getElementById(Place[l]).appendChild(x[l]);
+					newPlace[l] = Place[l] + 1;
 				}
 			}
 			if (rotation[l] == 0) {
 				if (Place[l] < 13) {
-					Place[l] = Place[l] + 4;
-					document.getElementById(Place[l]).appendChild(x[l]);
+					newPlace[l] = Place[l] + 4;
 				}
 			}
 			if (rotation[l] == 90) {
 				if (Place[l] % 4 !== 1) {
-					Place[l] = Place[l] - 1;
-					document.getElementById(Place[l]).appendChild(x[l]);
+					newPlace[l] = Place[l] - 1;
 				}
 			}
+		}
+
+		function Move() {
+			if (newPlace[1] == Place[2]) {
+				if (newPlace[2] == Place[2]) {
+					//1 pushes 2
+				} else {
+					Place = newPlace;
+				}
+			} else if (newPlace[2] == Place[1]) {
+				if (newPlace[1] == Place[1]) {
+					//2 pushes 1
+				} else {
+					Place = newPlace;
+				}
+			} else if (newPlace[1] == newPlace [2]) {
+
+			} else {
+				Place = newPlace;
+			}
+
 		}
 
 		function Rotate(l) {
@@ -253,6 +271,9 @@
 							RobotForward(l);
 						}
 					}
+					Move();
+					document.getElementById(Place[1]).appendChild(x[1]);
+					document.getElementById(Place[2]).appendChild(x[2]);
 				}
 				go = ["",0,0];
 			}
