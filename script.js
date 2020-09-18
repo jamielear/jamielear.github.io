@@ -1,17 +1,7 @@
 "use strict"
-var x1 = document.createElement("img");
-x1.setAttribute("src", "robotimage_final.png");
-x1.setAttribute("width", "125");
-x1.setAttribute("height", "125");
-x1.setAttribute("alt", "Robot");
-x1.style.transform = "rotate(270deg)"
 
-var x2 = document.createElement("img");
-x2.setAttribute("src", "robotimage_final.png");
-x2.setAttribute("width", "125");
-x2.setAttribute("height", "125");
-x2.setAttribute("alt", "Robot");
-x2.style.transform = "rotate(90deg)"
+var x1 = document.getElementById("robot1");
+var x2 = document.getElementById("robot2");
 
 var x = ["",x1,x2];
 

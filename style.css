@@ -21,3 +21,12 @@
     transform: rotate(-0deg);
 }
 
+.robot {
+    width:125px;
+    height:125px;
+}
+#robot1 {
+    transform:rotate(270deg);
+}
+#robot2 {
+}
