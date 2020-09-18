@@ -18,6 +18,7 @@ var rotation = ["",270,90];
 var k;
 var l;
 var m;
+var loser;
 document.getElementById(1).appendChild(x[1]);
 document.getElementById(16).appendChild(x[2]);
 
@@ -28,21 +29,29 @@ function RobotForward(l,m) {
   if (rotation[m] == 180) {
     if (Place[l] > 4) {
       newPlace[l] = Place[l] - 4;
+    } else if (l!=m) {
+      loser = l;
     }
   }
   if (rotation[m] == 270) {
     if (Place[l] % 4 !== 0) {
       newPlace[l] = Place[l] + 1;
+    } else if (l!=m) {
+      loser = l;
     }
   }
   if (rotation[m] == 0) {
     if (Place[l] < 13) {
       newPlace[l] = Place[l] + 4;
+    } else if (l!=m) {
+      loser = l;
     }
   }
   if (rotation[m] == 90) {
     if (Place[l] % 4 !== 1) {
       newPlace[l] = Place[l] - 1;
+    } else if (l!=m) {
+      loser = l;
     }
   }
 }
@@ -166,6 +175,9 @@ function moveone(i) {
   Move();
   document.getElementById(Place[1]).appendChild(x[1]);
   document.getElementById(Place[2]).appendChild(x[2]);
+  if (loser) {
+    x[loser].remove();
+  }
 }
 
 
