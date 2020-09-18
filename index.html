@@ -184,6 +184,7 @@
 				if (newPlace[2] == Place[2]) {
 					//1 pushes 2
 				} else {
+					//1&2 bounce
 					Place = newPlace;
 				}
 			} else if (newPlace[2] == Place[1]) {
@@ -191,8 +192,9 @@
 					//2 pushes 1
 				} else {
 					Place = newPlace;
+					// I don't think this is even possible, but 1&2 bounce
 				}
-			} else if (newPlace[1] == newPlace [2]) {
+			} else if (newPlace[1] == newPlace[2]) {
 
 			} else {
 				Place = newPlace;
