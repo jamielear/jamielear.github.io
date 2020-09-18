@@ -8,8 +8,8 @@ var go = [null,0,0];
 
 var Program = [
   null,
-  [null,"0","0","0","0","0","0","0"],
-  [null,"0","0","0","0","0","0","0"]
+  [null,0,0,0,0,0,0,0],
+  [null,0,0,0,0,0,0,0]
 ];
 
 var Place = ["",1,16];
@@ -43,7 +43,6 @@ function RobotForward(l,m) {
   if (rotation[m] == 90) {
     if (Place[l] % 4 !== 1) {
       newPlace[l] = Place[l] - 1;
-      console.log(newPlace);
     }
   }
 }
@@ -62,7 +61,6 @@ function Move() {
   } else if (newPlace[2] == Place[1]) {
     if (newPlace[1] == Place[1]) {
       //2 pushes 1
-      console.log("t");
       Place[2]=newPlace[2];
       RobotForward(1,2);
       Place[1]=newPlace[1];
@@ -73,8 +71,10 @@ function Move() {
     }
   } else if (newPlace[1] == newPlace[2]) {
     //1&2 bounce
+    return;
   } else {
-    Place = newPlace;
+    Place[1] = newPlace[1];
+    Place[2] = newPlace[2];
   }
 }
 
@@ -139,23 +139,35 @@ function Turn() {
 }
 
 function Run() {
+  window.Moving = 1;
+  window.MoveStep = 0;
   if (go[1]==1 && go[2]==1) {
     for (var i = 1; i < 8; i++) {
-      for (var l = 1; l < 3; l++) {
-        if (Program[l][i] == "T") {
-          Rotate(l);
-        }
-        if (Program[l][i] == "F") {
-          RobotForward(l,l);
-        }
+      if (Program[1][i] || Program[2][i]) {
+        window.setTimeout(moveone, 2000*(i-1), i);
       }
-      Move();
-      document.getElementById(Place[1]).appendChild(x[1]);
-      document.getElementById(Place[2]).appendChild(x[2]);
     }
     go = ["",0,0];
   }
 }
+
+function moveone(i) {
+  newPlace[1] = Place[1];
+  newPlace[2] = Place[2];
+  for (var l = 1; l < 3; l++) {
+    if (Program[l][i] == "T") {
+      Rotate(l);
+    }
+    if (Program[l][i] == "F") {
+      RobotForward(l,l);
+    }
+  }
+  console.log(Place,newPlace);
+  Move();
+  document.getElementById(Place[1]).appendChild(x[1]);
+  document.getElementById(Place[2]).appendChild(x[2]);
+}
+
 
 function Array1() {
   for (k = 1; k < 8; k++) {
